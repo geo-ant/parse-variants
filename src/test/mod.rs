@@ -46,3 +46,13 @@ fn test_testy_test2() {
     let_assert!(SimpleVariant::Expression(parsed_expression) = variant);
     check!(parsed_expression == expression);
 }
+
+#[test]
+fn test_testy_test3() {
+    // this tests that expression will be parsed although the ident is just as suitable
+    // this is because the order matters
+    let variant = syn::parse_str::<SimpleVariant>("this_could_also_be_an_ident").unwrap();
+    let expression = syn::parse_str::<Expr>("this_could_also_be_an_ident").unwrap();
+    let_assert!(SimpleVariant::Expression(parsed_expression) = variant);
+    check!(parsed_expression == expression);
+}
