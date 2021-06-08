@@ -11,3 +11,9 @@ members = ["parse-variants-derive"]
 
 [dependencies]
 parse-variants-derive = {path = "parse-variants-derive", version = "0.1.0"}
+
+
+[dev-dependencies]
+syn = "1.0"
+proc-macro2 = "1.0"
+assert2 = "0.3"
