@@ -10,7 +10,7 @@ use super::Parse;
 ///DOCUMENT THIS. PARSE_STR WILL ACTUALLY THROW AN ERROR IF NOT ALL TOKENS ARE USED IN THE EXPRESSION
 #[derive(Parse)]
 enum SimpleVariant {
-    IntCommaInt(LitInt, syn::token::Comma, LitInt),
+    SumOfInts(LitInt, syn::token::Add, LitInt),
     Expression(Expr),
     Identifier(Ident),
 }
@@ -31,13 +31,23 @@ enum ComplicatedVariants {
 
 #[test]
 fn test_testy_test() {
-    let variant = syn::parse_str::<SimpleVariant>("1,1239874").unwrap();
+    let variant = syn::parse_str::<SimpleVariant>("1 + 1239874").unwrap();
 
-    let_assert!(SimpleVariant::IntCommaInt(int1,comma,int2) = variant);
+    let_assert!(SimpleVariant::SumOfInts(int1,comma,int2) = variant);
     check!(int1 == syn::parse_str::<LitInt>("1").unwrap());
-    check!(comma == syn::parse_str::<syn::token::Comma>(",").unwrap());
+    check!(comma == syn::parse_str::<syn::token::Add>("+").unwrap());
     check!(int2 == syn::parse_str::<LitInt>("1239874").unwrap());
 }
+
+#[test]
+fn test_testy_test1() {
+    // this cannot be parsed as a sum of integer literals, so this must be parsed as an expr
+    let variant = syn::parse_str::<SimpleVariant>("a+1239874").unwrap();
+    let expression = syn::parse_str::<Expr>("a+1239874").unwrap();
+    let_assert!(SimpleVariant::Expression(parsed_expression) = variant);
+    check!(parsed_expression == expression);
+}
+
 
 #[test]
 fn test_testy_test2() {
@@ -46,6 +56,8 @@ fn test_testy_test2() {
     let_assert!(SimpleVariant::Expression(parsed_expression) = variant);
     check!(parsed_expression == expression);
 }
+
+
 
 #[test]
 fn test_testy_test3() {
