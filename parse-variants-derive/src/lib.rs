@@ -68,10 +68,14 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
             fn parse(input : & ::syn::parse::ParseBuffer)->Result<Self, ::syn::Error> {
                 use ::syn::parse::discouraged::Speculative;
                 #parse_body
-                Err(syn::Error::new(input.span(),"expected integer literal or identifier"))
+                Err(syn::Error::new(input.span(),"tokens cannot be parsed as an #enum_ident variant"))
             }
         }
     };
+
+    // println!("IMPLEMENTATION = \n{}", parse_impl_tokens.to_string());
+    // panic!();
+
     parse_impl_tokens.into()
 }
 
