@@ -1,13 +1,15 @@
 [package]
-name = "parse-variants"
+name = "parse-variants-derive"
 version = "0.1.0"
 authors = ["geo-ant <54497890+geo-ant@users.noreply.github.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[workspace]
-members = ["parse-variants-derive"]
+[lib]
+proc-macro = true
 
 [dependencies]
-parse-variants-derive = {path = "parse-variants-derive", version = "0.1.0"}
+quote = "1"
+proc-macro2 = "1.0"
+syn = {version="1.0",features=["parsing"]}
