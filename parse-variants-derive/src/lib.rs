@@ -86,7 +86,7 @@ fn get_data_enum(input : &DeriveInput) -> Result<&DataEnum, TokenStream>{
             if !data_enum.variants.is_empty() {
                 Ok(data_enum)
             } else {
-                Err(syn::Error::new(input.span().join(input.ident.span()).unwrap_or(input.ident.span()), "no variants: enumeration must have at least one variant").to_compile_error().into())
+                Err(syn::Error::new(input.span().join(input.ident.span()).unwrap_or_else(||input.ident.span()), "no variants: enumeration must have at least one variant").to_compile_error().into())
             }
         }
         Data::Union(_) | Data::Struct(_) => {

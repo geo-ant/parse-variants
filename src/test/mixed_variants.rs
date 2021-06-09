@@ -1,7 +1,7 @@
 use assert2::check;
 use assert2::let_assert;
 use syn::{Expr};
-use syn::{LitInt,Ident};
+use syn::{Ident};
 
 mod keywords {
     syn::custom_keyword!(lebowski);
