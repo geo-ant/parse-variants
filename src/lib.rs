@@ -1,3 +1,5 @@
+//! A helper trait that allows us to 
+
 pub use parse_variants_derive::Parse;
 
 #[cfg(test)]

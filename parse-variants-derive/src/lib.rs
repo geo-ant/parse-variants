@@ -5,6 +5,7 @@ use syn::spanned::Spanned;
 use syn::{parse_macro_input, Data, DataEnum, DeriveInput, Fields};
 
 #[proc_macro_derive(Parse)]
+/// Some documentation
 pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     let enum_ident = &input.ident;
