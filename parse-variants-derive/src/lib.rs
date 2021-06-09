@@ -1,8 +1,8 @@
 use proc_macro::TokenStream;
 
 use quote::quote;
-use syn::{Data, DeriveInput, Fields, parse_macro_input, DataEnum};
 use syn::spanned::Spanned;
+use syn::{parse_macro_input, Data, DataEnum, DeriveInput, Fields};
 
 #[proc_macro_derive(Parse)]
 pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
@@ -10,7 +10,9 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
     let enum_ident = &input.ident;
     let data_enum = match get_data_enum(&input) {
         Ok(data_enum) => data_enum,
-        Err(error) => {return error;}
+        Err(error) => {
+            return error;
+        }
     };
 
     // here we generate the code that tries to parse the actual variants by repeatedly forking
@@ -22,7 +24,11 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
         let variant_name = &variant.ident;
         let try_parse_variant = match variant.fields {
             Fields::Named(ref fields_named) => {
-                let fields: Vec<_> = fields_named.named.iter().map(|field| field.ident.as_ref().unwrap()).collect();
+                let fields: Vec<_> = fields_named
+                    .named
+                    .iter()
+                    .map(|field| field.ident.as_ref().unwrap())
+                    .collect();
                 // generated code looks e.g. like this
                 // Ok(MyEnum::StructLikeVariant{field1 : fork.parse()?, field2 : fork.parse()?})
                 quote! {
@@ -31,7 +37,8 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
             }
             Fields::Unnamed(ref fields_unnamed) => {
                 let fork_parse_questionmark = quote! {fork.parse()?};
-                let repeated_input_parsing = std::iter::repeat(fork_parse_questionmark).take(fields_unnamed.unnamed.len());
+                let repeated_input_parsing =
+                    std::iter::repeat(fork_parse_questionmark).take(fields_unnamed.unnamed.len());
                 // code looks e.g. like this
                 // Ok(MyEnum::TupleLikeVariant(fork.parse()?,fork.parse()?))
                 // where fork.parse()? is repeated for each field of the tuple like variant
@@ -42,7 +49,12 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
             Fields::Unit => {
                 // unit like variants (i.e. variants with no fields)
                 // cannot be parsed and will return a compile error
-                return syn::Error::new(variant.ident.span(), "illegal unit variant: enumeration may not have variants without fields").to_compile_error().into();
+                return syn::Error::new(
+                    variant.ident.span(),
+                    "illegal unit variant: enumeration may not have variants without fields",
+                )
+                .to_compile_error()
+                .into();
             }
         };
 
@@ -80,17 +92,28 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
 // the DataEnum field, if the derive input is an enum and if the enum has at least one variant.
 // If the enum has no variants or the derive input is not an enum, a descriptive error is returned. The
 // error is returned as TokenStream and can be passed on directly.
-fn get_data_enum(input : &DeriveInput) -> Result<&DataEnum, TokenStream>{
+fn get_data_enum(input: &DeriveInput) -> Result<&DataEnum, TokenStream> {
     match input.data {
         Data::Enum(ref data_enum) => {
             if !data_enum.variants.is_empty() {
                 Ok(data_enum)
             } else {
-                Err(syn::Error::new(input.span().join(input.ident.span()).unwrap_or_else(||input.ident.span()), "no variants: enumeration must have at least one variant").to_compile_error().into())
+                Err(syn::Error::new(
+                    input
+                        .span()
+                        .join(input.ident.span())
+                        .unwrap_or_else(|| input.ident.span()),
+                    "no variants: enumeration must have at least one variant",
+                )
+                .to_compile_error()
+                .into())
             }
         }
-        Data::Union(_) | Data::Struct(_) => {
-            Err(syn::Error::new(input.span(), "expected enum: parsing variants only works with enumerations").to_compile_error().into())
-        }
+        Data::Union(_) | Data::Struct(_) => Err(syn::Error::new(
+            input.span(),
+            "expected enum: parsing variants only works with enumerations",
+        )
+        .to_compile_error()
+        .into()),
     }
 }
