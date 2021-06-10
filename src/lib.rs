@@ -6,8 +6,7 @@
 //! # Motivation
 //! For a project, I was trying to parse tokens that could either be an integer literal or an identifier
 //! from a [ParseBuffer](https://docs.rs/syn/1.0/syn/parse/struct.ParseBuffer.html). This inspired me
-//! to write a custom derive macro for these kinds of use cases. It enables us to solve the problem
-//! like so:
+//! to write a custom derive macro for these kinds of use cases. We can now write
 //! ```
 //! #[derive(parse_variants::Parse)]
 //! enum Number {
@@ -15,7 +14,7 @@
 //!     Literal(syn::LitInt),
 //! }
 //! ```
-//! We can now use it to parse like so:
+//! and then use this type to parse either variant from a parse buffer like so:
 //! ```
 //! # #[derive(parse_variants::Parse)]
 //! # enum Number {
@@ -29,12 +28,12 @@
 //! # Ok(())
 //! # }
 //! ```
-//! Or in any other context where we wish to parse this type. The custom derive macro can be used on
-//! much more general `enum` types, enabling pretty powerful parsing of variants.
+//! Parsing will return the first variant that can be parsed from the contents of the parse buffer.
+//! If none of the variants can be parsed, a compile error is returned. We can use this in any context
+//! where we wish to parse this type. The custom derive macro can also be used on
+//! much more general `enum` types, enabling pretty powerful parsing of variant types.
 //!
 //! [See the macro documentation for more use cases and some caveats](self::Parse).
-//!
-
 
 /// A derive macro that allows us to parse a variant of an enumeration.
 ///
@@ -46,17 +45,17 @@
 /// ## General
 /// * The custom derive can be applied to *enumerations*, which may contain struct like or
 /// tuple like variants. Each variant may contain one or multiple fields.
-/// * Every contained field must implement the `syn::parse::Parse` trait.
-/// * Member fields for each variants are parsed in order of definition.
+/// * Every contained field must implement the [`syn::parse::Parse`](https://docs.rs/syn/1.0.73/syn/parse/trait.Parse.html) trait.
+/// * Member fields for each variants are parsed in order of declaration.
 /// * The first variant (in order of declaration) that is successfully parsed from the input will
 /// be returned. The input `ParseBuffer` is advanced accordingly.
 /// * If no variant can be successfully parsed from the given input, a descriptive compile error
 /// is returned.
 ///
 /// ## Caveats
-/// The enum variants are parsed top to bottom. That means the first variant that can successfully
-/// parsed will be returned. That means the order matters if one variant includes other variants.
-/// Take this for example:
+/// The enum variants are speculatively parsed in order or declaration, i.e. the first variant that can successfully
+/// parsed is be returned. Accordingly, the order matters if one variant includes other variants
+/// as in the following example
 /// ```
 /// // WRONG: this can never return the Identifier variant
 /// #[derive(parse_variants::Parse)]
@@ -105,7 +104,7 @@
 /// # let_assert!(Ok(SillyEnum::ExpressionInMeters{..}) = syn::parse_str::<SillyEnum>("16 + 12*length meters"));
 /// # let_assert!(Ok(SillyEnum::IdentPlusPlus(_,_,_)) = syn::parse_str::<SillyEnum>("C++"));
 /// ```
-/// This will e.g. parse the tokens `16 + 12*length meters` as the first and `C++` as the second variant.
+/// This parses the tokens `16 + 12*length meters` as the first and `C++` as the second variant.
 pub use parse_variants_derive::Parse;
 
 #[cfg(test)]

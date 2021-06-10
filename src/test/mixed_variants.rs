@@ -14,7 +14,7 @@ enum EnumWithMixedVariants {
         _the_dude: keywords::lebowski,
         second: syn::Expr,
     },
-    IdentifierPlusPlus(Ident, syn::token::Add,syn::token::Add),
+    IdentifierPlusPlus(Ident, syn::token::Add, syn::token::Add),
 }
 
 #[test]
@@ -39,7 +39,6 @@ fn parsing_struct_like_variants_work() {
 fn parsing_stuple_like_variants_work() {
     let variant = syn::parse_str::<EnumWithMixedVariants>("C++").unwrap();
     let expected_ident = syn::parse_str::<Ident>("C").unwrap();
-    let_assert!(EnumWithMixedVariants::IdentifierPlusPlus(ident,_,_) = variant);
+    let_assert!(EnumWithMixedVariants::IdentifierPlusPlus(ident, _, _) = variant);
     check!(ident == expected_ident);
 }
-

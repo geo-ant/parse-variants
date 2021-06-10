@@ -4,8 +4,66 @@ use quote::quote;
 use syn::spanned::Spanned;
 use syn::{parse_macro_input, Data, DataEnum, DeriveInput, Fields};
 
+/*
+ See the documentation in the parse-variants crate on how to use the macro.
+ Here is a quick example for how the generated code looks.
+ We apply the macro to this enum:
+
+     #[derive(crate::Parse)]
+     enum EnumWithMixedVariants {
+        TwoExpressionsSeparatedByKeyword {
+            first: syn::Expr,
+            _the_dude: keywords::lebowski,
+            second: syn::Expr,
+        },
+        IdentifierPlusPlus(Ident, syn::token::Add,syn::token::Add),
+     }
+
+ Then the generate syn::parse::Parse implementation looks like this:
+
+    impl ::syn::parse::Parse for EnumWithMixedVariants {
+        fn parse(input: &::syn::parse::ParseBuffer) -> ::std::result::Result<Self, ::syn::Error> {
+            use ::syn::parse::discouraged::Speculative; //needed for input.advance_to(...)
+            // 1) fork input for first variant and try if we can parse it
+            let fork = input.fork();
+            if let Ok(variant) = (|| {   // here we use a closure to return a result or error without returning the error directly from our parse function
+                // this is how parsing named fields looks like
+                Ok(EnumWithMixedVariants::TwoExpressionsSeparatedByKeyword {
+                    first: fork.parse()?,
+                    _the_dude: fork.parse()?,
+                    second: fork.parse()?,
+                }) as ::std::result::Result<EnumWithMixedVariants, ::syn::Error>
+            })() {
+                // if we can parse the variant, advance the parsebuffer and return immediately
+                input.advance_to(&fork);
+                return Ok(variant);
+            }
+            // 2) fork the second variant
+            let fork = input.fork();
+            if let Ok(variant) = (|| {   // same trick with the closure as above to catch the error returns
+                // this is how parsing named fields looks like
+                Ok(EnumWithMixedVariants::IdentifierPlusPlus(
+                    fork.parse()?,
+                    fork.parse()?,
+                    fork.parse()?,
+                )) as ::std::result::Result<EnumWithMixedVariants, ::syn::Error>
+            })() {
+                input.advance_to(&fork);
+                return Ok(variant);
+            }
+            // if no variants can be parsed, return an error
+            Err(syn::Error::new(
+                input.span(),
+                ::std::format! {
+                    "parse error: tokens cannot be parsed as any variant of {}",
+                    ::std::stringify! { EnumWithMixedVariants }
+                },
+            ))
+        }
+    }
+*/
+
 #[proc_macro_derive(Parse)]
-/// Some documentation
 pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     let enum_ident = &input.ident;
@@ -82,8 +140,8 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
         }
     };
 
-    // println!("IMPLEMENTATION = \n{}", parse_impl_tokens.to_string());
-    // panic!();
+    //println!("IMPLEMENTATION = \n{}", parse_impl_tokens.to_string());
+    //panic!();
 
     parse_impl_tokens.into()
 }
