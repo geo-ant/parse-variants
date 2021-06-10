@@ -2,6 +2,7 @@
 ![build](https://github.com/geo-ant/parse-variants/workflows/build/badge.svg?branch=main)
 ![lints](https://github.com/geo-ant/parse-variants/workflows/lints/badge.svg?branch=main)
 ![tests](https://github.com/geo-ant/parse-variants/workflows/tests/badge.svg?branch=main)
+![approval-tests](https://github.com/geo-ant/parse-variants/workflows/approval-tests/badge.svg?branch=main)
 
 Derive the `syn::parse::Parse` trait for enumerations and use it to comfortably parse 
 a variant of the enumeration.
@@ -23,13 +24,13 @@ and then use this type to parse either variant from a parse buffer like so:
 // input : &ParseBuffer
 let num : Number = input.parse()?;
 ```
-Parsing returns the first variant that can be parsed from the contents of the parse buffer.
+This operation returns the first variant that can be successfully parsed from the contents of the parse buffer.
 If none of the variants can be parsed, a compile error is returned. We can use this in any context
 where we wish to parse this type. The custom derive macro can also be used on
 much more general `enum` types, enabling pretty powerful parsing of variant types.
 
 # Advanced Use Cases
-Enumerations do not have to be as simple as in the example above. This crate will let you
+Enumerations do not have to be as simple as in the example above, because this crate will let you
 use the custom derive on enumerations with struct-like or tuple-like variants (or any
 combination of them). See this silly example for a more advanced use case:
 ```rust
