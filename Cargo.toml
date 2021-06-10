@@ -1,8 +1,15 @@
 [package]
 name = "parse-variants"
 version = "0.1.0"
-authors = ["geo-ant <54497890+geo-ant@users.noreply.github.com>"]
+authors = ["geo-ant <geos.blog@posteo.de>"]
 edition = "2018"
+homepage = "https://github.com/geo-ant/parse-variants"
+repository = "https://github.com/geo-ant/parse-variants"
+categories = ["development-tools::procedural-macro-helpers"]
+description = "Derive the syn::parse::Parse trait for enumerations and use it to comfortably parse a variant of the enumeration"
+readme = "README.md"
+keywords = ["parse","either","variant","enum","speculative"]
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -19,3 +26,4 @@ parse-variants-derive = {path = "parse-variants-derive", version = "0.1.0"}
 syn = {version = "1.0", features = ["full","extra-traits"]}
 proc-macro2 = "1.0"
 assert2 = "0.3"
+macrotest = "1.0"

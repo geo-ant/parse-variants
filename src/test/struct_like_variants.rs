@@ -1,7 +1,7 @@
 use assert2::check;
 use assert2::let_assert;
-use syn::{Expr};
-use syn::{LitInt};
+use syn::Expr;
+use syn::LitInt;
 
 use crate::Parse;
 
@@ -18,8 +18,8 @@ enum EnumWithNamedVariants {
     },
     TwoExpressionsSeparatedByKeyword {
         first: syn::Expr,
-        _or : keywords::or,
-        second : syn::Expr,
+        _or: keywords::or,
+        second: syn::Expr,
     },
 }
 
@@ -30,7 +30,9 @@ fn the_first_variant_that_parses_is_returned2() {
     let variant = syn::parse_str::<EnumWithNamedVariants>("1+1 or x+y").unwrap();
     let expected_first = syn::parse_str::<Expr>("1+1").unwrap();
     let expected_second = syn::parse_str::<Expr>("x+y").unwrap();
-    let_assert!(EnumWithNamedVariants::TwoExpressionsSeparatedByKeyword{first, _or, second} = variant);
+    let_assert!(
+        EnumWithNamedVariants::TwoExpressionsSeparatedByKeyword { first, _or, second } = variant
+    );
     check!(first == expected_first);
     check!(second == expected_second);
 }
@@ -42,7 +44,13 @@ fn the_first_variant_that_parses_is_returned1() {
     let variant = syn::parse_str::<EnumWithNamedVariants>("123,456").unwrap();
     let expected_first = syn::parse_str::<LitInt>("123").unwrap();
     let expected_second = syn::parse_str::<LitInt>("456").unwrap();
-    let_assert!(EnumWithNamedVariants::TwoIntegersWithComma{first, _comma, second} = variant);
+    let_assert!(
+        EnumWithNamedVariants::TwoIntegersWithComma {
+            first,
+            _comma,
+            second
+        } = variant
+    );
     check!(first == expected_first);
     check!(second == expected_second);
 }

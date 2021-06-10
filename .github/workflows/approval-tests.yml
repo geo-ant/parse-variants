@@ -1,4 +1,4 @@
-name: tests
+name: approval-tests
 
 on:
   push:
@@ -11,16 +11,17 @@ env:
 
 jobs:
   test:
-    name: Test Suite
+    name: Approval Tests for Macro Expansion
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: nightly # macro expansion tests need the nightly toolchain
           override: true
+      - run: cargo install cargo-expand #this is potentially slower than using the action below
       - uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --workspace -- --skip macro_expansion # explicitly skip all macro expansion tests here
+          args: macro_expansion # explicitly only run the tests from the macro_expansion module

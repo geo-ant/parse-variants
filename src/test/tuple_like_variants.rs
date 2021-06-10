@@ -1,7 +1,7 @@
 use assert2::check;
 use assert2::let_assert;
+use syn::LitInt;
 use syn::{Expr, Ident};
-use syn::{LitInt};
 
 use crate::Parse;
 
@@ -17,7 +17,7 @@ enum EnumWithUnnamedVariants {
 #[test]
 fn first_variant_is_parsed_when_it_matches() {
     let variant = syn::parse_str::<EnumWithUnnamedVariants>("1 + 1239874").unwrap();
-    let_assert!(EnumWithUnnamedVariants::SumOfInts(int1,comma,int2) = variant);
+    let_assert!(EnumWithUnnamedVariants::SumOfInts(int1, comma, int2) = variant);
     check!(int1 == syn::parse_str::<LitInt>("1").unwrap());
     check!(comma == syn::parse_str::<syn::token::Add>("+").unwrap());
     check!(int2 == syn::parse_str::<LitInt>("1239874").unwrap());
@@ -32,15 +32,14 @@ fn second_variant_is_parsed_when_first_cannot_be_matched() {
     check!(parsed_expression == expression);
 }
 
-
 #[test]
 fn expressions_are_correctly_parsed() {
-    let variant = syn::parse_str::<EnumWithUnnamedVariants>("this.looks(&like) == an + expression").unwrap();
+    let variant =
+        syn::parse_str::<EnumWithUnnamedVariants>("this.looks(&like) == an + expression").unwrap();
     let expression = syn::parse_str::<Expr>("this.looks(&like) == an + expression").unwrap();
     let_assert!(EnumWithUnnamedVariants::Expression(parsed_expression) = variant);
     check!(parsed_expression == expression);
 }
-
 
 #[test]
 fn the_first_working_parsed_is_chosen() {
