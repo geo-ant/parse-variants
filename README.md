@@ -34,6 +34,10 @@ Enumerations do not have to be as simple as in the example above, because this c
 use the custom derive on enumerations with struct-like or tuple-like variants (or any
 combination of them). See this silly example for a more advanced use case:
 ```rust
+mod kw {
+    syn::custom_keyword!(meters);
+}
+
 #[derive(parse_variants::Parse)]
 enum SillyEnum {
     ExpressionInMeters {
@@ -42,8 +46,6 @@ enum SillyEnum {
     },
     IdentPlusPlus(Ident, syn::Token![+], syn::Token![+]),
 }
-# let_assert!(Ok(SillyEnum::ExpressionInMeters{..}) = syn::parse_str::<SillyEnum>("16 + 12*length meters"));
-# let_assert!(Ok(SillyEnum::IdentPlusPlus(_,_,_)) = syn::parse_str::<SillyEnum>("C++"));
 ```
 This parses the tokens `16 + 12*length meters` as the first and `C++` as the second variant.
 
