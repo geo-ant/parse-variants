@@ -1,6 +1,6 @@
 [package]
 name = "parse-variants"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["geo-ant <geos.blog@posteo.de>"]
 edition = "2021"
 homepage = "https://github.com/geo-ant/parse-variants"
@@ -19,7 +19,7 @@ license = "MIT"
 members = ["parse-variants-derive"]
 
 [dependencies]
-parse-variants-derive = {path = "parse-variants-derive", version = "0.1.0"}
+parse-variants-derive = {path = "parse-variants-derive", version = "1.0.0"}
 
 
 [dev-dependencies]
