@@ -14,7 +14,7 @@ enum EnumWithMixedVariants {
         _the_dude: keywords::lebowski,
         second: syn::Expr,
     },
-    IdentifierPlusPlus(Ident, syn::token::Add, syn::token::Add),
+    IdentifierPlusPlus(Ident, syn::token::Plus, syn::token::Plus),
 }
 
 #[test]
