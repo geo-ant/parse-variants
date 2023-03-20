@@ -42,7 +42,7 @@ fn expressions_are_correctly_parsed() {
 }
 
 #[test]
-    fn the_first_working_parse_is_chosen() {
+fn the_first_working_parse_is_chosen() {
     // this tests that expression will be parsed although the ident is just as suitable
     // this is because the order matters
     let variant = syn::parse_str::<EnumWithUnnamedVariants>("this_could_also_be_an_ident").unwrap();
