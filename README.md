@@ -3,6 +3,7 @@
 ![lints](https://github.com/geo-ant/parse-variants/workflows/lints/badge.svg?branch=main)
 ![tests](https://github.com/geo-ant/parse-variants/workflows/tests/badge.svg?branch=main)
 ![approval-tests](https://github.com/geo-ant/parse-variants/workflows/approval-tests/badge.svg?branch=main)
+![maintenance-status](https://img.shields.io/badge/maintenance-passively--maintained-yellowgreen.svg)
 
 Derive the `syn::parse::Parse` trait for enumerations and use it to comfortably parse 
 a variant of the enumeration.
@@ -24,7 +25,9 @@ and then use this type to parse either variant from a parse buffer like so:
 // input : &ParseBuffer
 let num : Number = input.parse()?;
 ```
-This operation returns the first variant that can be successfully parsed from the contents of the parse buffer.
+
+This operation returns the first variant (in order of declaration) that can 
+be successfully parsed from the contents of the parse buffer.
 If none of the variants can be parsed, a compile error is returned. We can use this in any context
 where we wish to parse this type. The custom derive macro can also be used on
 much more general `enum` types, enabling pretty powerful parsing of variant types.
