@@ -11,6 +11,7 @@ use crate::Parse;
 enum EnumWithUnnamedVariants {
     SumOfInts(LitInt, syn::token::Plus, LitInt),
     Expression(Expr),
+    #[allow(dead_code)]
     Identifier(Ident), // due to the order of the enum, this can never be parsed because Expr is a superset of Ident
 }
 
