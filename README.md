@@ -1,8 +1,8 @@
 # parse-variants
-![build](https://github.com/geo-ant/parse-variants/workflows/build/badge.svg?branch=main)
-![lints](https://github.com/geo-ant/parse-variants/workflows/lints/badge.svg?branch=main)
-![tests](https://github.com/geo-ant/parse-variants/workflows/tests/badge.svg?branch=main)
-![approval-tests](https://github.com/geo-ant/parse-variants/workflows/approval-tests/badge.svg?branch=main)
+![build](https://github.com/geo-ant/parse-variants/workflows/build/badge.svg)
+![lints](https://github.com/geo-ant/parse-variants/workflows/lints/badge.svg)
+![tests](https://github.com/geo-ant/parse-variants/workflows/tests/badge.svg)
+![approval-tests](https://github.com/geo-ant/parse-variants/workflows/approval-tests/badge.svg)
 ![maintenance-status](https://img.shields.io/badge/maintenance-passively--maintained-yellowgreen.svg)
 
 Derive the `syn::parse::Parse` trait for enumerations and use it to comfortably parse 
