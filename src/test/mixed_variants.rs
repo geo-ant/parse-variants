@@ -8,6 +8,7 @@ mod keywords {
 }
 
 #[derive(crate::Parse)]
+#[allow(dead_code)]
 enum EnumWithMixedVariants {
     TwoExpressionsSeparatedByKeyword {
         first: syn::Expr,
