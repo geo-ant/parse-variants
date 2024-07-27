@@ -8,7 +8,13 @@
 Derive the `syn::parse::Parse` trait for enumerations and use it to comfortably parse 
 a variant of the enumeration.
 
-# Motivation
+
+## Support
+
+If you like this crate, recommend it to others. You can also [buy me a coffee](https://ko-fi.com/geoant)
+if you feel like it.
+
+## Motivation
 For a little project, I was trying to parse tokens that could either be an integer literal or an identifier
 from a [ParseBuffer](https://docs.rs/syn/1.0/syn/parse/struct.ParseBuffer.html). This inspired me
 to write a custom derive macro for these kinds of use cases. We can now write
@@ -32,7 +38,7 @@ If none of the variants can be parsed, a compile error is returned. We can use t
 where we wish to parse this type. The custom derive macro can also be used on
 much more general `enum` types, enabling pretty powerful parsing of variant types.
 
-# Advanced Use Cases
+## Advanced Use Cases
 Enumerations do not have to be as simple as in the example above, because this crate will let you
 use the custom derive on enumerations with struct-like or tuple-like variants (or any
 combination of them). See this silly example for a more advanced use case:

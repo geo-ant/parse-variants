@@ -44,13 +44,13 @@
 ///
 /// ## General
 /// * The custom derive can be applied to *enumerations*, which may contain struct like or
-/// tuple like variants. Each variant may contain one or multiple fields.
+///   tuple like variants. Each variant may contain one or multiple fields.
 /// * Every contained field must implement the [`syn::parse::Parse`](https://docs.rs/syn/1.0.73/syn/parse/trait.Parse.html) trait.
 /// * Member fields for each variants are parsed in order of declaration.
 /// * The first variant (in order of declaration) that is successfully parsed from the input will
-/// be returned. The input `ParseBuffer` is advanced accordingly.
+///   be returned. The input `ParseBuffer` is advanced accordingly.
 /// * If no variant can be successfully parsed from the given input, a descriptive compile error
-/// is returned.
+///   is returned.
 ///
 /// ## Caveats
 /// The enum variants are speculatively parsed in order or declaration, i.e. the first variant that can successfully
