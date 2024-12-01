@@ -4,15 +4,10 @@
 ![tests](https://github.com/geo-ant/parse-variants/actions/workflows/tests.yml/badge.svg?branch=main)
 ![approval-tests](https://github.com/geo-ant/parse-variants/actions/workflows/approval-tests.yml/badge.svg?branch=main)
 ![maintenance-status](https://img.shields.io/badge/maintenance-passively--maintained-yellowgreen.svg)
+[![crates](https://raw.githubusercontent.com/geo-ant/user-content/refs/heads/main/ko-fi-support.svg)](https://ko-fi.com/geoant)
 
 Derive the `syn::parse::Parse` trait for enumerations and use it to comfortably parse 
 a variant of the enumeration.
-
-
-## Support
-
-If you like this crate, recommend it to others. You can also [buy me a coffee](https://ko-fi.com/geoant)
-if you feel like it.
 
 ## Motivation
 For a little project, I was trying to parse tokens that could either be an integer literal or an identifier
