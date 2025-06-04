@@ -97,7 +97,7 @@ pub fn derive_parse_variants(input: TokenStream) -> TokenStream {
             Fields::Unnamed(ref fields_unnamed) => {
                 let fork_parse_questionmark = quote! {fork.parse()?};
                 let repeated_input_parsing =
-                    std::iter::repeat(fork_parse_questionmark).take(fields_unnamed.unnamed.len());
+                    std::iter::repeat_n(fork_parse_questionmark, fields_unnamed.unnamed.len());
                 // code looks e.g. like this
                 // Ok(MyEnum::TupleLikeVariant(fork.parse()?,fork.parse()?))
                 // where fork.parse()? is repeated for each field of the tuple like variant
