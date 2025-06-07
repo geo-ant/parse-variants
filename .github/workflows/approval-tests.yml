@@ -21,7 +21,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly # macro expansion tests need the nightly toolchain
+          toolchain: stable
           override: true
       - run: cargo install cargo-expand #this is potentially slower than using the action below
       - uses: actions-rs/cargo@v1
