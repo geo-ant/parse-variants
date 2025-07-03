@@ -38,15 +38,19 @@ impl ::syn::parse::Parse for EnumWithMixedVariants {
         Err(
             syn::Error::new(
                 input.span(),
-                ::alloc::__export::must_use({
+                {
                     let res = ::alloc::fmt::format(
-                        format_args!(
-                            "parse error: tokens cannot be parsed as any variant of {0}",
-                            "EnumWithMixedVariants",
+                        ::core::fmt::Arguments::new_v1(
+                            &["parse error: tokens cannot be parsed as any variant of "],
+                            &[
+                                ::core::fmt::ArgumentV1::new_display(
+                                    &"EnumWithMixedVariants",
+                                ),
+                            ],
                         ),
                     );
                     res
-                }),
+                },
             ),
         )
     }
