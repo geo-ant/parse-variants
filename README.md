@@ -54,3 +54,7 @@ enum SillyEnum {
 This parses the tokens `16 + 12*length meters` as the first and `C++` as the second variant.
 
 Consult the crate documentation for more information on how to use this macro and what to watch out for.
+
+# Minimum Supported Rust Version (MSRV)
+
+The minimum supported Rust version is `1.66.0`.

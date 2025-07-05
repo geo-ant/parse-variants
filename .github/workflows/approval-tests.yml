@@ -21,9 +21,9 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: 1.81.0
           override: true
-      - run: cargo install cargo-expand #this is potentially slower than using the action below
+      - run: cargo install cargo-expand 
       - uses: actions-rs/cargo@v1
         with:
           command: test
