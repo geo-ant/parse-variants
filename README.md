@@ -3,7 +3,7 @@
 ![lints](https://github.com/geo-ant/parse-variants/actions/workflows/lints.yml/badge.svg?branch=main)
 ![tests](https://github.com/geo-ant/parse-variants/actions/workflows/tests.yml/badge.svg?branch=main)
 ![approval-tests](https://github.com/geo-ant/parse-variants/actions/workflows/approval-tests.yml/badge.svg?branch=main)
-[![crates](https://img.shields.io/crates/v/varpro)](https://crates.io/crates/parse-variants)
+[![crates](https://img.shields.io/crates/v/parse-variants)](https://crates.io/crates/parse-variants)
 ![maintenance-status](https://img.shields.io/badge/maintenance-passively--maintained-yellowgreen.svg)
 [![support](https://raw.githubusercontent.com/geo-ant/user-content/refs/heads/main/ko-fi-support.svg)](https://ko-fi.com/geoant)
 
