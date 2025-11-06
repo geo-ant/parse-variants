@@ -23,7 +23,7 @@ jobs:
           profile: minimal
           toolchain: 1.86.0
           override: true
-      - run: cargo install cargo-expand 
+      - run: cargo install cargo-expand --locked
       - uses: actions-rs/cargo@v1
         with:
           command: test
